@@ -5,7 +5,7 @@ ARG SPACEBOT_VERSION=latest
 FROM ghcr.io/spacedriveapp/spacebot:${SPACEBOT_VERSION}
 
 # Install Node + npm so we can install OpenCode
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     nodejs \
     npm \
     # Browser dependencies (re-install spacebot’s Chromium prerequisites)
@@ -34,7 +34,8 @@ RUN apt-get update && apt-get install -y \
 
 # Install OpenCode CLI globally (pin version if desired)
 ARG OPENCODE_VERSION=latest
-RUN npm install -g opencode-ai@"${OPENCODE_VERSION}"
+RUN --mount=type=cache,target=/root/.npm \
+    npm install -g opencode-ai@"${OPENCODE_VERSION}"
 
 # Add npm’s global bin folder explicitly to PATH
 ENV PATH="/usr/local/bin:${PATH}"
