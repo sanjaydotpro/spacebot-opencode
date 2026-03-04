@@ -43,3 +43,10 @@ ENV PATH="/usr/local/bin:${PATH}"
 # Verify installations
 RUN git --version
 RUN opencode --version
+
+# Install Infisical CLI for secrets management
+RUN --mount=type=cache,target=/root/.npm \
+    npm install -g @infisical/cli@latest
+
+# Verify Infisical installation
+RUN infisical --version
