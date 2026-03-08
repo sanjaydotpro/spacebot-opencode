@@ -96,10 +96,6 @@ jobs:
 
           platforms: linux/amd64
 
-          # Cache layers for faster builds
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
           # Pass versions as build args
           build-args: |
             SPACEBOT_VERSION=${{ vars.SPACEBOT_VERSION || 'latest' }}
